@@ -2,4 +2,7 @@
     <string name="app_name">GPS定位開門系統</string>
     <string name="imputclientid">ImputClientID</string>
     <string name="userpassword">Userpassword</string>
+    <string name="opne">開門</string>
+    <string name="close">關門</string>
+    <string name="app_name_control">門的開關控制</string>
 </resources>
