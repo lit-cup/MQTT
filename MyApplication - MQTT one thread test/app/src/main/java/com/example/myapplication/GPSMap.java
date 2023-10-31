@@ -115,7 +115,7 @@ public class GPSMap extends AppCompatActivity implements LocationListener {
             double latitude = lastKnownLocation.getLatitude();
             double longitude = lastKnownLocation.getLongitude();
             LatLng latLng = new LatLng(latitude, longitude);
-
+            savedMarkerLatLng = latLng;
             // 清除地圖上的所有標記
             googleMap.clear();
 
