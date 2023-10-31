@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -10,22 +9,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-
 import org.eclipse.paho.client.mqttv3.MqttException;
-
 import java.util.List;
 
 public class location_selection extends AppCompatActivity {
     private static final String MQTT_URL = "210.240.202.123";
-    String smqttSubTopic = "DeviceState";
+    private static final String smqttSubTopic = "DeviceState";
+    private static String SelectedItem;
     String ETt_StringMQTTacc, ETt1_StringMQTTpass, ETt2_StringPhoneNumber;
     private AutoCompleteTextView spinner;
 
@@ -50,11 +44,11 @@ public class location_selection extends AppCompatActivity {
         // 调用方法加载 homeName 数据
         loadHomeNames();
 
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
         btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,7 +59,7 @@ public class location_selection extends AppCompatActivity {
                 } catch (MqttException e) {
                     throw new RuntimeException(e);
                 }
-                String SelectedItem = spinner.getText().toString();
+                SelectedItem = spinner.getText().toString();
                 if(!SelectedItem.equals("")){
                     //選取家在資料庫裡的全部資料
                     SpinnerSelectDB(SelectedItem);
@@ -92,7 +86,10 @@ public class location_selection extends AppCompatActivity {
         spinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showState.setText("");
+                SelectedItem = spinner.getText().toString();
+                if(!SelectedItem.equals("")) {
+                    showState.setText("");
+                }
             }
         });
     }
@@ -116,6 +113,7 @@ public class location_selection extends AppCompatActivity {
             }
             cursor.moveToNext();
         }
+        cursor.close();
     }
     private void loadHomeNames() {
 
